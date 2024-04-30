@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.max.springboot.ViewController">
+
+    <children>
+        <SplitPane dividerPositions="0.6" prefHeight="326.0" prefWidth="600.0" style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <items>
+                <AnchorPane>
+                    <children>
+                        <TableView fx:id="_TableView" editable="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                            <columns>
+                                <TableColumn fx:id="_IdColumn" editable="false" prefWidth="${_TableView.width * 0.1}" sortable="true" text="ID" />
+                                <TableColumn fx:id="_AvailableColumn" prefWidth="${_TableView.width * 0.1}" sortable="true" text="Available" />
+                                <TableColumn fx:id="_NameColumn" prefWidth="${_TableView.width * 0.3}" sortable="true" text="Name" />
+                                <TableColumn fx:id="_BookedByColumn" prefWidth="${_TableView.width * 0.2}" sortable="true" text="Booked By" />
+                                <TableColumn fx:id="_DateBooked" prefWidth="${_TableView.width * 0.3}" sortable="true" text="Date Booked" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="300.0">
+                    <children>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                            <children>
+                                <VBox prefWidth="100.0" spacing="10.0">
+                                    <children>
+                                        <Label text="Phone Name" />
+                                        <TextField fx:id="_NameTextField" editable="false" prefWidth="248.0" />
+                                    </children>
+                                </VBox>
+                                <VBox prefWidth="100.0" spacing="10.0">
+                                  <children>
+                                    <Label text="Booked By" />
+                                    <TextField fx:id="_BookedByTextField" onKeyReleased="#handleKeyAction" prefWidth="248.0" />
+                                  </children>
+                                </VBox>
+                                <HBox alignment="BASELINE_RIGHT" spacing="10.0">
+                                    <children>
+                              <CheckBox fx:id="_IsAvailableCheckbox" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Is Available" HBox.hgrow="ALWAYS">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </CheckBox>
+                                        <Button fx:id="_BookButton" mnemonicParsing="false" onAction="#bookButtonAction" prefWidth="65.0" text="Book" />
+                                        <Button fx:id="_ReturnButton" mnemonicParsing="false" onAction="#returnButtonAction" prefWidth="65.0" text="Return" />
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER">
+                                    <children>
+                                        <Label fx:id="_ResultLabel" text="" textAlignment="CENTER" wrapText="true">
+                                            <!--<font>
+                                                <Font name="Arial Bold" size="14.0" />
+                                            </font>-->
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER">
+                                    <children>
+                                        <ProgressIndicator fx:id="_ProgressIndicator" visible="false" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </children>
+</AnchorPane>

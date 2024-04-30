@@ -1,2 +1,31 @@
-# phone-booking-fx
-Phone booking app sample
+# Phone booking JavaFX REST app demo
+
+The demo contains two project  - a JavaFX client and REST server. These projects were built using 
+IntelliJ IDEA.
+
+## SpringBootRest 
+This is a REST Server using JPA, Hibernate, H2 in-memory database, re-created each time the server starts.
+
+The project provides CRUD REST endpoints for Phones table. Synchronous traditional REST server, uses 
+embedded Tomcat. See `applications.properties` file for custom configuration. You can access the database 
+console at http://localhost:8080/h2-console, and its data is set from `data.sql` file. 
+
+To start the server use `mvnw spring-boot:run` command. To stop - `mvnw spring-boot:stop`. 
+
+## ClientFX 
+A JavaFX & SpringBoot client that provides book/return operations.
+
+It uses Gluon Ignite libraries. Adds JavaFX controller and FXML view. Spring Boot main application launches 
+JavaFX. Both Ignite and Spring Boot contexts are initialized. Ignite supports popular DI frameworks and 
+allows DI in JavaFX applications. JavaFX loader builds scene graph.
+
+It uses WebFlux WebClient in blocking mode. Also uses JavaFX Concurrency library to make REST calls 
+in a background thread. The code has a delay, so you can see the progress indicator. You must run the 
+ServerRest project first.
+
+To start the client use `mvn javafx:run`.
+
+
+
+![Screenshot of a demo JavaFX client running](demo.png)
+
