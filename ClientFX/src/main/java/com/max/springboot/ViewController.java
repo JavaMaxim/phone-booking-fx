@@ -23,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ import java.util.ResourceBundle;
 
 
 @Component
-/** */
+/** Main controller class responsible for user interaction and service calls. */
 public class ViewController implements Initializable {
 
     private final int SLEEPCOUNT = 2500;
@@ -141,7 +142,7 @@ public class ViewController implements Initializable {
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize( URL location, ResourceBundle resources) {
 
         bindComponents();
         buildTableView();
@@ -151,12 +152,25 @@ public class ViewController implements Initializable {
 
 
     private void bindComponents(){
+
         _BookButton.disableProperty().bind( _TableView.getSelectionModel().selectedItemProperty().isNull().or(
             _IsAvailableCheckbox.selectedProperty().not() ).or( _ModifiedProperty.not() ) );
         _ReturnButton.disableProperty().bind( _TableView.getSelectionModel().selectedItemProperty().isNull().or(
             _IsAvailableCheckbox.selectedProperty() ) );
         _BookedByTextField.editableProperty().bind( _IsAvailableCheckbox.selectedProperty() );
         _ProgressIndicator.visibleProperty().bind( _BackgroundActive.greaterThan( 0 ) );
+
+        _TableView.setOnKeyPressed( event -> {
+
+            if( KeyCode.F5 == event.getCode() ){
+
+                loadData();
+                event.consume();
+
+            }
+
+        } );
+
     }
 
     private void buildTableView(){
@@ -217,21 +231,56 @@ public class ViewController implements Initializable {
 
     }
 
+
     private void loadData(){
 
-        try{
-            _PhoneData.setAll( FXCollections.observableList( _PhoneService.getPhones() ) );
-        }
-        catch( Exception e ){
-            e.printStackTrace();
-            _TableView.setPlaceholder( new Text( "Failed to load the phones. Check the database \nis available at http://localhost:8080/h2-console/" ) );
-        }
-        finally{
-            _TableView.setItems( _PhoneData );
-        }
+        final LoadTask task = new LoadTask();
+        _BackgroundActive.set( _BackgroundActive.get() + 1 );
+        _TableView.setDisable( true );
+        _NameTextField.setDisable( true );
+        _BookedByTextField.setDisable( true );
 
-        //_TableView.getSelectionModel().clearSelection();
-        //System.out.println( _PhoneData );
+        task.setOnSucceeded( t -> {
+
+            _PhoneData.setAll( FXCollections.observableList( task.getValue() ) );
+            _TableView.setItems( _PhoneData );
+
+            _BackgroundActive.set( _BackgroundActive.get() - 1 );
+            _TableView.setDisable( false );
+            _NameTextField.setDisable( false );
+            _BookedByTextField.setDisable( false );
+
+        } );
+
+        task.setOnFailed( t -> {
+
+            _BackgroundActive.set( _BackgroundActive.get() - 1 );
+            _TableView.setDisable( false );
+            _NameTextField.setDisable( false );
+            _BookedByTextField.setDisable( false );
+
+            _ResultLabel.setText( "Failed to load phones " + ".\n" + task.getException().getLocalizedMessage() );
+            _TableView.setPlaceholder( new Text( "Failed to load the phones. Check the database \nis available at http://localhost:8080/h2-console/" ) );
+
+        } );
+
+        new Thread( task ).start();
+
+    }
+
+
+    private class LoadTask extends Task<List<Phone>>{
+
+        @Override
+        protected List<Phone> call() throws Exception{
+
+            Thread.sleep( 2 * SLEEPCOUNT );
+            return _PhoneService.getPhones();
+
+            //_TableView.getSelectionModel().clearSelection();
+            //System.out.println( _PhoneData );
+
+        }
 
     }
 

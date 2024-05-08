@@ -20,6 +20,7 @@
                                 <TableColumn fx:id="_BookedByColumn" prefWidth="${_TableView.width * 0.2}" sortable="true" text="Booked By" />
                                 <TableColumn fx:id="_DateBooked" prefWidth="${_TableView.width * 0.3}" sortable="true" text="Date Booked" />
                             </columns>
+                            <tooltip><Tooltip text="Press F5 to reload the data" /></tooltip>
                         </TableView>
                     </children>
                 </AnchorPane>
