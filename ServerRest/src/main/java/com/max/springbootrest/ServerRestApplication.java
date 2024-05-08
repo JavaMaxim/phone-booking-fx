@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-@SpringBootApplication
 /** Main application class for the REST server. */
+@SpringBootApplication
 public class ServerRestApplication{
 
     public static void main(String[] args) {

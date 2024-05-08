@@ -38,13 +38,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 
-@Component
 /** Main controller class responsible for user interaction and service calls. */
+@Component
 public class ViewController implements Initializable {
 
-    private final int SLEEPCOUNT = 2500;
+    private static final int SLEEPCOUNT = 2500;
     private static final Logger LOG = LoggerFactory.getLogger( ViewController.class );
-    
+
     @Autowired private PhoneRESTService _PhoneService;
     @FXML private TableView<Phone> _TableView;
     @FXML private TableColumn<Phone, Integer> _IdColumn;
@@ -187,22 +187,22 @@ public class ViewController implements Initializable {
         _DateBooked.setCellValueFactory( new PropertyValueFactory<>( "dateBooked" ) );
         _DateBooked.setCellFactory( column -> { TableCell<Phone, Date> cell = new TableCell<>(){
 
-                private SimpleDateFormat format = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss" );
+            private SimpleDateFormat format = new SimpleDateFormat( "dd.MM.yyyy HH:mm:ss" );
 
-                @Override
-                protected void updateItem( Date item, boolean empty ){
+            @Override
+            protected void updateItem( Date item, boolean empty ){
 
-                    super.updateItem( item, empty );
-                    if( empty || null == item ){
-                        setText( null );
-                    }
-                    else{
-                        setText( format.format( item ) );
-                    }
-
+                super.updateItem( item, empty );
+                if( empty || null == item ){
+                    setText( null );
+                }
+                else{
+                    setText( format.format( item ) );
                 }
 
-            };
+            }
+
+        };
 
             return cell;
 
@@ -231,7 +231,6 @@ public class ViewController implements Initializable {
 
     }
 
-
     private void loadData(){
 
         final LoadTask task = new LoadTask();
@@ -244,6 +243,9 @@ public class ViewController implements Initializable {
 
             _PhoneData.setAll( FXCollections.observableList( task.getValue() ) );
             _TableView.setItems( _PhoneData );
+
+            //_TableView.getSelectionModel().clearSelection();
+            //System.out.println( _PhoneData );
 
             _BackgroundActive.set( _BackgroundActive.get() - 1 );
             _TableView.setDisable( false );
@@ -276,9 +278,6 @@ public class ViewController implements Initializable {
 
             Thread.sleep( 2 * SLEEPCOUNT );
             return _PhoneService.getPhones();
-
-            //_TableView.getSelectionModel().clearSelection();
-            //System.out.println( _PhoneData );
 
         }
 

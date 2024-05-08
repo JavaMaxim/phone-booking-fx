@@ -11,8 +11,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-@Entity
-@Table(name = "phones")
+@Entity @Table(name = "phones")
 public class Phone implements Serializable {
 
     @Id
@@ -36,6 +35,11 @@ public class Phone implements Serializable {
 
     public Phone(){
     }
+
+    public Phone( String name ){
+        _Name = name;
+    }
+
 
     public Integer getId(){
         return _Id;

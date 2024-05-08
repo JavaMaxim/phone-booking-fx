@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 
+/** Phones REST resource it is a producer/consumer with Service resources. */
 @RestController
-/** Phones REST resource */
 public class PhonesResource{
 
     @Autowired
