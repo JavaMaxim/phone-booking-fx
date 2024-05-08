@@ -21,7 +21,7 @@ allows DI in JavaFX applications. JavaFX loader builds scene graph.
 
 It uses WebFlux WebClient in blocking mode. It also uses JavaFX Concurrency library to make REST calls 
 in a background thread. The code has a delay so you can see the progress indicator. You have to run the 
-ServerRest project first.
+**ServerRest project first**.
 
 To start the client use `mvn javafx:run`.
 
