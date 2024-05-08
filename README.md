@@ -10,7 +10,8 @@ The project provides CRUD REST endpoints for the Phones table. Synchronous tradi
 embedded Tomcat. See `applications.properties` file for custom configuration. You can access the database 
 console at http://localhost:8080/h2-console, and its data is set from `data.sql` file. 
 
-To start the server use `mvnw spring-boot:run` command. To stop - `mvnw spring-boot:stop`. 
+**You have to run the ServerRest project first**. To start the server use `mvnw spring-boot:run` command. To stop - 
+`mvnw spring-boot:stop`. 
 
 ## ClientFX 
 A JavaFX & SpringBoot client that provides book/return operations.
@@ -20,8 +21,7 @@ JavaFX. Both Ignite and Spring Boot contexts are initialized. Ignite supports po
 allows DI in JavaFX applications. JavaFX loader builds scene graph.
 
 It uses WebFlux WebClient in blocking mode. It also uses JavaFX Concurrency library to make REST calls 
-in a background thread. The code has a delay so you can see the progress indicator. You have to run the 
-**ServerRest project first**.
+in a background thread. The code has a delay so you can see the progress indicator. 
 
 To start the client use `mvn javafx:run`.
 
